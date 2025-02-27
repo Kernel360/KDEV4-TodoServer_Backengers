@@ -1,9 +1,7 @@
 package com.example.rest_api.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.example.rest_api.model.BookQueryParam;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api") // /api 라는 주소로 요청을 받겠다는 의미
@@ -26,5 +24,44 @@ public class RestApiController {
         System.out.println("echo age: " + age);
         System.out.println("echo isMan: " + isMan);
         return msg.toUpperCase();
+    }
+
+    @GetMapping("/book")
+    public void queryParams(
+            @RequestParam String category,
+            @RequestParam String issuedYear,
+            @RequestParam(name = "issued-month") String issuedMonth,
+            @RequestParam(name = "issued_day") String issuedDay
+    ) {
+        System.out.println(category);
+        System.out.println(issuedYear);
+        System.out.println(issuedMonth);
+        System.out.println(issuedDay);
+    }
+
+    @GetMapping("/book2")
+    public void queryParamDto(
+            BookQueryParam bookQueryParam
+    ) {
+        System.out.println(bookQueryParam.getCategory());
+        System.out.println(bookQueryParam.getIssuedYear());
+        System.out.println(bookQueryParam.getIssuedMonth());
+        System.out.println(bookQueryParam.getIssuedDay());
+    }
+
+    @GetMapping("/calc")
+    public void calc(
+            @RequestParam int a,
+            @RequestParam int b
+    ) {
+        System.out.println(a + b);
+        System.out.println(a * b);
+    }
+
+    @GetMapping("/person")
+    public void bool(
+            @RequestParam(name = "is-man") boolean isMan
+    ) {
+        System.out.println(isMan);
     }
 }
