@@ -16,9 +16,15 @@ public class RestApiController {
         return html;
     }
 
-    @GetMapping(path = "/echo/{message}")
-    public String echo(@PathVariable(name = "message") String msg) {
-        System.out.println(msg);
+    @GetMapping(path = "/echo/{message}/age/{age}/is-man/{isMan}")
+    public String echo(
+            @PathVariable(name = "message") String msg,
+            @PathVariable int age,
+            @PathVariable boolean isMan
+    ) {
+        System.out.println("echo message: " + msg);
+        System.out.println("echo age: " + age);
+        System.out.println("echo isMan: " + isMan);
         return msg.toUpperCase();
     }
 }
