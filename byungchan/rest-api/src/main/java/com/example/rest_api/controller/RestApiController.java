@@ -1,6 +1,7 @@
 package com.example.rest_api.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,5 +14,11 @@ public class RestApiController {
         // 응답의 데이터 형식은 문자열
         var html = "<html> <body> <h1>Hello Spring Boot</h1> </body> </html>";
         return html;
+    }
+
+    @GetMapping(path = "/echo/{message}")
+    public String echo(@PathVariable(name = "message") String msg) {
+        System.out.println(msg);
+        return msg.toUpperCase();
     }
 }
