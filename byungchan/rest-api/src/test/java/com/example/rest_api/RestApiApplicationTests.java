@@ -1,13 +1,29 @@
 package com.example.rest_api;
 
+import com.example.rest_api.model.CreateUserRequest;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 class RestApiApplicationTests {
+	@Autowired
+	private ObjectMapper objectMapper;
 
 	@Test
-	void contextLoads() {
+	void contextLoads() throws JsonProcessingException {
+		var user = new CreateUserRequest();
+		user.setUserName("홍길동");
+		user.setUserAge(20);
+		user.setEmail("gildong@gmail.com");
+		user.setIsKorean(true);
+
+		var json = objectMapper.writeValueAsString(user);
+		System.out.println(json);
+
+		var dto = objectMapper.readValue(json, CreateUserRequest.class);
 	}
 
 }
