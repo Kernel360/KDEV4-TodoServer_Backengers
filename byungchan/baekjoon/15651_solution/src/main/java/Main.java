@@ -1,82 +1,32 @@
-import java.io.*;
-import java.util.StringTokenizer;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
-    static StringBuilder sb = new StringBuilder();
 
-    static void input() {
-        FastReader scan = new FastReader();
-        N = scan.nextInt();
-        M = scan.nextInt();
-        selected = new int[M + 1];
-    }
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        // 첫 번째 줄: 정수 n 입력
+        int cnt = Integer.parseInt(br.readLine());
 
-    static int N, M;
-    static int[] selected;
+        // 두 번째 줄: 문자열 입력
+        String input = br.readLine();
 
-    // Recurrence Function (재귀 함수)
-    // 만약 M 개를 전부 고름  => 조건에 맞는 수열 탐색을 한 가지 성공한 것
-    // 아직 M 개를 고르지 않음 => k 번째부터 M 번째 원소를 조건에 맞게 고르는 방법을 시도한다.
-    static void rec_func(int k) {
-        if (k == M + 1) { // 다 골랐다!
-            // selected[1...M] 배열이 새롭게 탐색된 결과
-        } else {
-
-        }
-    }
-
-    public static void main(String[] args) {
-        input();
-
-        // 1번째 원소부터 M번째 원소를 조건에 맞는 모든 방법을 찾아줘
-        rec_func(1);
-        System.out.println(sb.toString());
-    }
-
-    static class FastReader {
-        BufferedReader br;
-        StringTokenizer st;
-
-        public FastReader() {
-            br = new BufferedReader(new InputStreamReader(System.in));
+        // 문자열을 정수 리스트로 변환
+        List<Integer> numbers = new ArrayList<>();
+        for (char c: input.toCharArray()) {
+            numbers.add(Character.getNumericValue(c));
         }
 
-        public FastReader(String filename) throws FileNotFoundException {
-            br = new BufferedReader(new FileReader(new File(filename)));
+        // 주어진 숫자의 합 계산
+        int sum = 0;
+        for (int num: numbers ) {
+            sum += num;
         }
 
-        String next() {
-            while (st == null || !st.hasMoreElements()) {
-                try {
-                    st = new StringTokenizer(br.readLine());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            return st.nextToken();
-        }
-
-        int nextInt() {
-            return Integer.parseInt(next());
-        }
-
-        long nextLong() {
-            return Long.parseLong(next());
-        }
-
-        double nextDouble() {
-            return Double.parseDouble(next());
-        }
-
-        String nextLine() {
-            String str = "";
-            try {
-                str = br.readLine();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return str;
-        }
-
+        // 결과 출력
+        System.out.println(sum);
     }
 }
