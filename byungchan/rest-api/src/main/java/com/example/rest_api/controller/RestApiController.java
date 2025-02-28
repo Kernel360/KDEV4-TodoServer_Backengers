@@ -1,8 +1,10 @@
 package com.example.rest_api.controller;
 
 import com.example.rest_api.model.BookQueryParam;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+@Slf4j
 @RestController
 @RequestMapping("/api") // /api 라는 주소로 요청을 받겠다는 의미
 public class RestApiController {
@@ -63,5 +65,15 @@ public class RestApiController {
             @RequestParam(name = "is-man") boolean isMan
     ) {
         System.out.println(isMan);
+    }
+
+    @DeleteMapping(path = {
+            "/user/{userName}/delete",
+            "/user/{userName}/del"
+    })
+    public void delete(
+            @PathVariable String userName
+    ) {
+        log.info("user-name: {}", userName);
     }
 }
