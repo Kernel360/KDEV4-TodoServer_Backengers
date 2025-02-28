@@ -15,4 +15,5 @@ public class CreateUserRequest {
     private Integer userAge;
     private String email;
     private String tel;
+    private Boolean isKorean;
 }
