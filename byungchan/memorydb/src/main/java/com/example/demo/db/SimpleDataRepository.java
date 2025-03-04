@@ -30,12 +30,13 @@ public abstract class SimpleDataRepository<T extends Entity, ID extends Long> im
         if (prevData.isPresent()) {
             // 기존 데이터 있는 경우 업데이트
             // 이전 데이터를 없애버리고 새로운 데이터가 자리 잡게 되지만 고유한 아이디는 동일함.
-            dataList.remove(prevData);
+            dataList.remove(prevData.get());
             dataList.add(data);
         } else {
             // 없는 경우
+            index++;
             // unique id;
-            data.setId(index++);
+            data.setId(index);
             dataList.add(data);
         }
         return data;
@@ -59,6 +60,12 @@ public abstract class SimpleDataRepository<T extends Entity, ID extends Long> im
                 .collect(Collectors.toList());
     }
 
+    public List<T> findAllScoreGreaterThan(int score) {
+        return dataList.stream()
+                .filter(it -> it.getScore() >= score)
+                .collect(Collectors.toList());
+    }
+
     // delete
     @Override
     public void delete(ID id) {
@@ -67,7 +74,7 @@ public abstract class SimpleDataRepository<T extends Entity, ID extends Long> im
                 .findFirst();
 
         if (deleteEntity.isPresent()) {
-            dataList.remove(deleteEntity);
+            dataList.remove(deleteEntity.get());
         }
     }
 }
