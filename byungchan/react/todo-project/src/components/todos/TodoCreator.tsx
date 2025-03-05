@@ -1,19 +1,37 @@
-import { useState } from 'react'
-import TextField from './TextField'
+import { ChangeEvent, useRef, useState } from 'react'
+import { useTodoStore } from '@/stores/todo'
 
-interface TodoCreatorProps {
-  todos: string[]
-}
+export default function TodoCreator() {
+  const [title, setTitle] = useState<string>('')
+  const createTodo = useTodoStore(state => state.createTodo)
+  const inputRef = useRef<HTMLInputElement>(null)
 
-export default function TodoCreator({ todos }: TodoCreatorProps) {
-  const [todo, setTodo] = useState<string>('')
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) =>
+    setTitle(event.currentTarget.value)
 
-  const handleAdd = (todo: string) => {}
+  const handleAdd = (title: string) => {
+    createTodo(title)
+    setTitle('')
+  }
 
   return (
     <>
-      <TextField />
-      <button onClick={() => handleAdd(todo)}>추가</button>
+      <h1>{title}</h1>
+      <input
+        className="rounded-md"
+        type="text"
+        value={title}
+        onChange={handleChange}
+        onKeyDown={e => {
+          // 한글이 입력 중이다...
+          if (e.nativeEvent.isComposing) return
+          if (e.key === 'Enter') {
+            handleAdd(title)
+          }
+        }}
+        ref={inputRef}
+      />
+      <button onClick={() => handleAdd(title)}>추가</button>
     </>
   )
 }
